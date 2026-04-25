@@ -330,7 +330,7 @@ a fresh clone.
 - [x] Final `tsc --noEmit` — zero errors
 - [x] Final `vitest run` — 62 tests passing
 - [x] Final `storybook build` — zero errors
-- [ ] Tag release commit on GitHub
+- [x] Tag release commit on GitHub — `v1.0.0` on `51af9e9`
 
 ### Done When
 - Repo submitted with: TRD, code, test suite passing, Chromatic Storybook URL in README
