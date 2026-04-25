@@ -47,9 +47,9 @@ npm run build-storybook   # static build → storybook-static/
 
 Every component has a corresponding story file co-located under `components/`. MSW intercepts all HCM network calls — no Next.js server required to run any story.
 
-**Storybook (Chromatic):** _URL to be recorded after first deployment._
+**Storybook (Chromatic):** https://www.chromatic.com/library?appId=69ed208e81b16d489bd7d877
 
-To deploy:
+To deploy a new build:
 
 ```bash
 CHROMATIC_PROJECT_TOKEN=<your-token> npm run chromatic

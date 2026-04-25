@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { resetStore, getStore, storeKey } from './store'
 import {
   getBalance,
@@ -14,6 +14,7 @@ const stored = (empId: string, locId: string) =>
   getStore().get(storeKey(empId, locId))
 
 beforeEach(() => resetStore())
+afterEach(() => vi.restoreAllMocks())
 
 describe('parseForceFailure', () => {
   it('returns null when header is absent', () => {
@@ -51,6 +52,8 @@ describe('getBalance', () => {
 
 describe('writeBalance', () => {
   it('applies delta and increments version on success', () => {
+    // Pin random above all failure thresholds (10% conflict, 5% silent, 2% timeout)
+    vi.spyOn(Math, 'random').mockReturnValue(0.99)
     const result = writeBalance(getStore(), {
       employeeId: 'emp-alice',
       locationId: 'loc-nyc',
@@ -150,6 +153,7 @@ describe('getBalances', () => {
   })
 
   it('reflects mutations', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0.99)
     writeBalance(getStore(), {
       employeeId: 'emp-alice',
       locationId: 'loc-nyc',

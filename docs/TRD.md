@@ -116,6 +116,13 @@ check are mandatory — HCM can return 200 and silently not apply the change.
 to the request record before the mutation fires. No downstream read acts on a request
 in `processing` state. The tag is cleared only after the verified flow completes.
 
+> **Implementation note:** The `processing` tag was not implemented as a separate
+> record annotation. Instead, `useSubmitRequest` uses React Query's `cancelQueries`
+> in `onMutate` to prevent any in-flight reads from acting on pre-mutation state, and
+> `useBalance`'s `isMutating` guard suppresses background polls for the duration of
+> the mutation. These two mechanisms together satisfy the same invariant without
+> introducing a separate status field on the request record.
+
 **Read-after-write consistency requirements:**
 - Read from primary/master — never a replica (replica lag can return pre-mutation state
   and falsely trigger `hcm-silently-wrong`)
@@ -348,7 +355,16 @@ time-off submission erode trust in a product that is supposed to feel instant.
 
 ---
 
-## 5. Resolved Decisions
+## 5. Implementation Deviations
+
+| TRD spec | What was built | Reason |
+|---|---|---|
+| `processing` flag written to request record before mutation | `cancelQueries` + `isMutating` guard in `useBalance` | Same invariant, simpler — no extra field; guard lives in the data layer not the request model |
+| `ApproveButton` / `DenyButton` as separate components | Approve/Deny buttons are inline in `RequestCard` | The buttons have no reuse outside that card; extracting them would be premature abstraction |
+
+---
+
+## 6. Resolved Decisions
 
 | Question | Decision | Rationale |
 |---|---|---|
