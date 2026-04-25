@@ -5,6 +5,9 @@ import type {
   HcmWriteResponse,
   HcmAnniversaryBonusRequest,
   HcmAnniversaryBonusResponse,
+  HcmRequestsResponse,
+  HcmApproveResponse,
+  HcmDenyResponse,
   HcmErrorCode,
 } from './hcm-types'
 
@@ -66,4 +69,13 @@ export const hcmClient = {
       method: 'POST',
       body: JSON.stringify(body),
     }),
+
+  getRequests: () =>
+    hcmFetch<HcmRequestsResponse>('/requests'),
+
+  approveRequest: (requestId: string) =>
+    hcmFetch<HcmApproveResponse>(`/requests/${requestId}/approve`, { method: 'POST' }),
+
+  denyRequest: (requestId: string) =>
+    hcmFetch<HcmDenyResponse>(`/requests/${requestId}/deny`, { method: 'POST' }),
 }

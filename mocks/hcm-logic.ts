@@ -3,6 +3,9 @@ import type {
   HcmBalanceBatch,
   HcmErrorResponse,
   HcmWriteRequest,
+  HcmPendingRequest,
+  HcmApproveResponse,
+  HcmDenyResponse,
 } from '@/lib/hcm-types'
 import { storeKey } from './store'
 
@@ -109,6 +112,69 @@ export function writeBalance(
 export function getBalances(store: Map<string, HcmBalance>): HcmBalanceBatch {
   return { rows: Array.from(store.values()) }
 }
+
+// ─── Request operations ───────────────────────────────────────────────────────
+
+export function getRequests(
+  requestStore: Map<string, HcmPendingRequest>,
+): HcmPendingRequest[] {
+  return Array.from(requestStore.values())
+}
+
+export type ApproveResult =
+  | { type: 'success'; response: HcmApproveResponse }
+  | { type: 'not_found' }
+  | { type: 'already_settled'; status: 'approved' | 'denied' }
+  | { type: 'insufficient_balance'; error: HcmErrorResponse }
+
+export function approveRequest(
+  balanceStore: Map<string, HcmBalance>,
+  requestStore: Map<string, HcmPendingRequest>,
+  requestId: string,
+): ApproveResult {
+  const req = requestStore.get(requestId)
+  if (!req) return { type: 'not_found' }
+  if (req.status !== 'pending') return { type: 'already_settled', status: req.status }
+
+  const key = storeKey(req.employeeId, req.locationId)
+  const balance = balanceStore.get(key)
+  if (!balance || balance.balance + req.delta < 0) {
+    return {
+      type: 'insufficient_balance',
+      error: { code: 'INSUFFICIENT_BALANCE', message: 'Insufficient balance to approve this request' },
+    }
+  }
+
+  const updated: HcmBalance = {
+    ...balance,
+    balance: balance.balance + req.delta,
+    version: balance.version + 1,
+    asOf: new Date().toISOString(),
+  }
+  balanceStore.set(key, updated)
+  requestStore.set(requestId, { ...req, status: 'approved' })
+
+  return { type: 'success', response: { requestId, status: 'approved', balance: updated } }
+}
+
+export type DenyResult =
+  | { type: 'success'; response: HcmDenyResponse }
+  | { type: 'not_found' }
+  | { type: 'already_settled'; status: 'approved' | 'denied' }
+
+export function denyRequest(
+  requestStore: Map<string, HcmPendingRequest>,
+  requestId: string,
+): DenyResult {
+  const req = requestStore.get(requestId)
+  if (!req) return { type: 'not_found' }
+  if (req.status !== 'pending') return { type: 'already_settled', status: req.status }
+
+  requestStore.set(requestId, { ...req, status: 'denied' })
+  return { type: 'success', response: { requestId, status: 'denied' } }
+}
+
+// ─── Anniversary bonus ────────────────────────────────────────────────────────
 
 export function triggerAnniversaryBonus(
   store: Map<string, HcmBalance>,

@@ -1,5 +1,5 @@
-import type { HcmBalance } from '@/lib/hcm-types'
-import { SEED_BALANCES, EMPLOYEES } from './seed'
+import type { HcmBalance, HcmPendingRequest } from '@/lib/hcm-types'
+import { SEED_BALANCES, SEED_REQUESTS, EMPLOYEES } from './seed'
 
 export function storeKey(employeeId: string, locationId: string) {
   return `${employeeId}:${locationId}`
@@ -35,8 +35,35 @@ export function getStore(): Map<string, HcmBalance> {
 // Called in test beforeEach to guarantee a clean slate
 export function resetStore(): void {
   if (typeof globalThis !== 'undefined') {
-    (globalThis as Record<string, unknown>)[STORE_KEY] = createFreshStore()
+    const g = globalThis as Record<string, unknown>
+    g[STORE_KEY] = createFreshStore()
+    g[REQUEST_STORE_KEY] = createFreshRequestStore()
   }
+}
+
+// ─── Request store ─────────────────────────────────────────────────────────────
+
+const REQUEST_STORE_KEY = '__hcm_request_store__'
+
+function createFreshRequestStore(): Map<string, HcmPendingRequest> {
+  const map = new Map<string, HcmPendingRequest>()
+  for (const req of SEED_REQUESTS) {
+    map.set(req.id, { ...req, submittedAt: new Date().toISOString() })
+  }
+  return map
+}
+
+function resolveRequestStore(): Map<string, HcmPendingRequest> {
+  if (typeof globalThis !== 'undefined') {
+    const g = globalThis as Record<string, unknown>
+    if (!g[REQUEST_STORE_KEY]) g[REQUEST_STORE_KEY] = createFreshRequestStore()
+    return g[REQUEST_STORE_KEY] as Map<string, HcmPendingRequest>
+  }
+  return createFreshRequestStore()
+}
+
+export function getRequestStore(): Map<string, HcmPendingRequest> {
+  return resolveRequestStore()
 }
 
 // Anniversary timer — dev/demo only, never runs in CI or browser

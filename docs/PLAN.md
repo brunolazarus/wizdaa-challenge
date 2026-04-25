@@ -9,7 +9,7 @@ Phases are sequential — do not start a phase until the previous one is done.
 
 ---
 
-## Phase 0 — Foundation & TRD ✓ (TRD complete — scaffolding remains)
+## Phase 0 — Foundation & TRD ✓
 
 **Goal:** All design decisions are locked. Tooling runs. CI is wired.
 
@@ -26,19 +26,19 @@ Phases are sequential — do not start a phase until the previous one is done.
 
 ### Scaffolding Tasks
 
-- [ ] `git init`, create GitHub repo, push initial commit (PDF + CLAUDE.md + PLAN.md + TRD.md)
-- [ ] Scaffold Next.js 14 project (`create-next-app` — TypeScript strict, Tailwind, App Router)
-- [ ] Install and configure: TanStack Query v5, MSW v2, Storybook 8, Vitest, RTL
-- [ ] Set up `lib/hcm-types.ts` — TypeScript interfaces for all HCM request/response shapes
+- [x] `git init`, create GitHub repo, push initial commit (PDF + CLAUDE.md + PLAN.md + TRD.md)
+- [x] Scaffold Next.js 14 project (`create-next-app` — TypeScript strict, Tailwind, App Router)
+- [x] Install and configure: TanStack Query v5, MSW v2, Storybook 8, Vitest, RTL
+- [x] Set up `lib/hcm-types.ts` — TypeScript interfaces for all HCM request/response shapes
       (shapes decided by open question above; block on that answer first)
-- [ ] Set up `lib/query-keys.ts` — centralized key factory
+- [x] Set up `lib/query-keys.ts` — centralized key factory
       (`queryKeys.balance(empId, locId)`, `queryKeys.balances()`, `queryKeys.requests()`)
-- [ ] Set up `lib/hcm-client.ts` — typed fetch wrapper (shape only, no logic)
-- [ ] Set up `UserContext` — provides `{ employeeId, role }` to the component tree
+- [x] Set up `lib/hcm-client.ts` — typed fetch wrapper (shape only, no logic)
+- [x] Set up `UserContext` — provides `{ employeeId, role }` to the component tree
       (Context API, not React Query; this data is session-scoped and never re-fetches)
-- [ ] Configure MSW for Storybook (`msw-storybook-addon`) and for Vitest (`msw/node`)
-- [ ] GitHub Actions CI: `tsc --noEmit` + `vitest run` on every push
-- [ ] Verify: `npm run dev`, `npm run storybook`, `npm run test` all start without errors
+- [x] Configure MSW for Storybook (`msw-storybook-addon`) and for Vitest (`msw/node`)
+- [x] GitHub Actions CI: `tsc --noEmit` + `vitest run` on every push
+- [x] Verify: `npm run dev`, `npm run storybook`, `npm run test` all start without errors
 
 ### Done When
 - All three open questions answered and recorded in TRD §5
@@ -47,7 +47,7 @@ Phases are sequential — do not start a phase until the previous one is done.
 
 ---
 
-## Phase 1 — Mock HCM Layer
+## Phase 1 — Mock HCM Layer ✓
 
 **Goal:** A realistic HCM simulator that can reproduce every interesting failure mode.
 The mock logic is written **once** and shared between Storybook, Vitest, and dev mode.
@@ -68,18 +68,18 @@ implementations. This ensures dev-mode behavior matches test behavior exactly.
 
 ### Tasks
 
-- [ ] Define all TypeScript interfaces in `lib/hcm-types.ts`:
+- [x] Define all TypeScript interfaces in `lib/hcm-types.ts`:
   - `HcmBalance`: `{ employeeId, locationId, balance, unit, asOf: ISO8601, version: number }`
   - `HcmBalanceBatch`: `{ rows: HcmBalance[] }`
   - `HcmWriteRequest`: `{ employeeId, locationId, delta, reason }`
   - `HcmWriteResponse`: `{ success: boolean, balance: HcmBalance }`
   - `HcmErrorResponse`: `{ code: 'CONFLICT' | 'REJECTED' | 'INSUFFICIENT_BALANCE', message: string }`
 
-- [ ] Seed data module (`mocks/seed.ts`):
+- [x] Seed data module (`mocks/seed.ts`):
   - 3 employees × 2 locations with varying balances and `version: 1`
   - Deterministic (no randomness in seed) so tests get consistent starting state
 
-- [ ] `mocks/handlers.ts` — MSW request handlers:
+- [x] `mocks/handlers.ts` — MSW request handlers:
   - `GET /api/hcm/balance` — per-cell read
     - Returns `HcmBalance` including `version`
     - ~5% chance of returning stale/wrong value (silent failure) unless header overrides
@@ -93,13 +93,13 @@ implementations. This ensures dev-mode behavior matches test behavior exactly.
   - `POST /api/hcm/anniversary-bonus` — manual trigger
     - Adds bonus to all location balances for the given employee, increments `version`
 
-- [ ] `app/api/hcm/balance/route.ts` — thin wrapper over handler logic
-- [ ] `app/api/hcm/balances/route.ts` — thin wrapper
-- [ ] `app/api/hcm/anniversary-bonus/route.ts` — thin wrapper
-- [ ] Anniversary timer: fires every 30s in dev mode only when
+- [x] `app/api/hcm/balance/route.ts` — thin wrapper over handler logic
+- [x] `app/api/hcm/balances/route.ts` — thin wrapper
+- [x] `app/api/hcm/anniversary-bonus/route.ts` — thin wrapper
+- [x] Anniversary timer: fires every 30s in dev mode only when
       `NEXT_PUBLIC_HCM_ANNIVERSARY_TIMER=true`
 
-- [ ] Failure injection via request header `X-HCM-Force-Failure: silent|conflict|timeout`
+- [x] Failure injection via request header `X-HCM-Force-Failure: silent|conflict|timeout`
       takes precedence over random rates (used by tests for deterministic control)
 
 ### Done When
@@ -110,7 +110,7 @@ implementations. This ensures dev-mode behavior matches test behavior exactly.
 
 ---
 
-## Phase 2 — Data Layer
+## Phase 2 — Data Layer ✓
 
 **Goal:** React Query hooks that implement the full verified flow from TRD §2.3 —
 optimistic update, ETag capture, read-after-write verification, and the in-flight guard.
@@ -119,47 +119,47 @@ optimistic update, ETag capture, read-after-write verification, and the in-fligh
 
 #### Server-Side Hydration (replaces client-side batch fetch hook)
 
-- [ ] Server Component fetches batch corpus at request time using `lib/hcm-client.ts`
-- [ ] `dehydrate(queryClient)` + `<HydrationBoundary>` transfers server data into client cache
-- [ ] Per-cell cache entries are pre-populated from batch result on first render
-- [ ] No `useBalanceBatch` hook — the Server Component owns initial hydration
+- [x] Server Component fetches batch corpus at request time using `lib/hcm-client.ts`
+- [x] `dehydrate(queryClient)` + `<HydrationBoundary>` transfers server data into client cache
+- [x] Per-cell cache entries are pre-populated from batch result on first render
+- [x] No `useBalanceBatch` hook — the Server Component owns initial hydration
 
 #### `useBalance(employeeId, locationId)`
 
-- [ ] Polls every 30s (`refetchInterval: 30_000`)
-- [ ] Before writing a poll result to cache, checks `useIsMutating({ mutationKey: queryKeys.balance(employeeId, locationId) })`
-- [ ] If a mutation is in-flight for this key: suppress the poll result (do not update cache)
-- [ ] Returns `{ data: HcmBalance, isStale, isFetching, asOf }`
+- [x] Polls every 30s (`refetchInterval: 30_000`)
+- [x] Before writing a poll result to cache, checks `useIsMutating({ mutationKey: queryKeys.balance(employeeId, locationId) })`
+- [x] If a mutation is in-flight for this key: suppress the poll result (do not update cache)
+- [x] Returns `{ data: HcmBalance, isStale, isFetching, asOf }`
 
 #### `useSubmitRequest()`
 
 Implements the full verified flow from TRD §2.3:
 
-- [ ] Before firing: write `processing` flag to request record (prevents downstream reads from acting on unsettled state)
-- [ ] Capture pre-mutation `version` from current cache entry
-- [ ] Apply optimistic update: decrement balance, set request status to `optimistic-pending`
-- [ ] Fire `POST /api/hcm/balance`
-- [ ] On any response (success or error): invalidate cache entry `[employeeId, locationId]`
-- [ ] Trigger read-after-write re-fetch from primary (not cache)
-- [ ] Verify `version` changed from pre-mutation value:
+- [x] Before firing: write `processing` flag to request record (prevents downstream reads from acting on unsettled state)
+- [x] Capture pre-mutation `version` from current cache entry
+- [x] Apply optimistic update: decrement balance, set request status to `optimistic-pending`
+- [x] Fire `POST /api/hcm/balance`
+- [x] On any response (success or error): invalidate cache entry `[employeeId, locationId]`
+- [x] Trigger read-after-write re-fetch from primary (not cache)
+- [x] Verify `version` changed from pre-mutation value:
   - Version changed → transition to `hcm-confirmed`, clear `processing` flag
   - Version unchanged (HCM 200 but no write) → transition to `hcm-silently-wrong`, roll back
-- [ ] On HCM 4xx rejection: roll back optimistic update, transition to `hcm-rejected`
-- [ ] On HCM 409: roll back, transition to `hcm-conflict`
-- [ ] On any failure: transition to `optimistic-rolled-back` — never silently reset to `idle`
+- [x] On HCM 4xx rejection: roll back optimistic update, transition to `hcm-rejected`
+- [x] On HCM 409: roll back, transition to `hcm-conflict`
+- [x] On any failure: transition to `optimistic-rolled-back` — never silently reset to `idle`
 
 #### `useApproveRequest()` / `useDenyRequest()`
 
-- [ ] Before action: re-fetch employee's balance (force fresh from primary)
-- [ ] Block action if `asOf` is older than the staleness threshold (resolved in Phase 0)
-- [ ] On success: invalidate request list cache
+- [x] Before action: re-fetch employee's balance (force fresh from primary)
+- [x] Block action if `asOf` is older than the staleness threshold (resolved in Phase 0)
+- [x] On success: invalidate request list cache
 
 #### Query key factory (`lib/query-keys.ts`)
 
-- [ ] `queryKeys.balance(empId, locId)` — used as both query key and mutation key (enables `useIsMutating` filter)
-- [ ] `queryKeys.balances()`
-- [ ] `queryKeys.requests()`
-- [ ] `queryKeys.request(requestId)`
+- [x] `queryKeys.balance(empId, locId)` — used as both query key and mutation key (enables `useIsMutating` filter)
+- [x] `queryKeys.balances()`
+- [x] `queryKeys.requests()`
+- [x] `queryKeys.request(requestId)`
 
 ### Done When
 - All hooks typed, no `any`
@@ -171,7 +171,7 @@ Implements the full verified flow from TRD §2.3:
 
 ---
 
-## Phase 3 — Employee View
+## Phase 3 — Employee View ✓
 
 **Goal:** The employee sees honest, up-to-date balances and gets accurate feedback at every step of a request.
 
@@ -179,38 +179,38 @@ Implements the full verified flow from TRD §2.3:
 
 #### Context
 
-- [ ] `UserContext` wired at layout level (`app/(employee)/layout.tsx`)
+- [x] `UserContext` wired at layout level (`app/(employee)/layout.tsx`)
       Provides `{ employeeId, role: 'employee' }` — consumed by hooks, not drilled as props
 
 #### Components
 
-- [ ] `BalanceTable` — per-location rows, consumes `useBalance` per row
-- [ ] `BalanceCell` — single cell showing balance, unit, `asOf` timestamp, staleness indicator
+- [x] `BalanceTable` — per-location rows, consumes `useBalance` per row
+- [x] `BalanceCell` — single cell showing balance, unit, `asOf` timestamp, staleness indicator
       Must show `"Balance updated"` inline indicator when poll lands a new value mid-session
-- [ ] `RequestForm` — location selector, date range, reason field
+- [x] `RequestForm` — location selector, date range, reason field
       Disabled while a mutation is in-flight for the selected location
-- [ ] `RequestStatusBanner` — renders current request state:
+- [x] `RequestStatusBanner` — renders current request state:
       `optimistic-pending` | `hcm-confirmed` | `hcm-rejected` | `hcm-conflict` | `hcm-silently-wrong` | `optimistic-rolled-back`
       Never shows "approved" — shows "confirmed by HCM" at most
-- [ ] `StaleDataWarning` — shown when the balance at submission time differs from the
+- [x] `StaleDataWarning` — shown when the balance at submission time differs from the
       balance returned by the post-mutation re-fetch
 
 #### Storybook Stories (with `argTypes` for API docs)
 
-- [ ] `BalanceTable`: `Loading`, `Empty`, `Stale`, `BalanceRefreshedMidSession`
-- [ ] `BalanceCell`: `Default`, `Stale`, `Refreshing`, `JustUpdated`
-- [ ] `RequestForm`: `Idle`, `Submitting`, `Disabled` (mutation in-flight)
-- [ ] `RequestStatusBanner`: `OptimisticPending`, `HcmConfirmed`, `HcmRejected`,
+- [x] `BalanceTable`: `Loading`, `Empty`, `Stale`, `BalanceRefreshedMidSession`
+- [x] `BalanceCell`: `Default`, `Loading`, `Stale`, `Refreshing`, `JustUpdated`
+- [x] `RequestForm`: `Idle`, `Submitting`, `Disabled`, `OptimisticRolledBack`, `HcmSilentlyWrong`
+- [x] `RequestStatusBanner`: `OptimisticPending`, `HcmConfirmed`, `HcmRejected`,
       `HcmConflict`, `HcmSilentlyWrong`, `OptimisticRolledBack`
 
 All stories: configure `argTypes` for every prop. Enable `autodocs` on the component.
 MSW addon controls HCM behavior per-story — no network required.
 
 ### Done When
-- All stories render with MSW-controlled HCM
-- Storybook interaction test: submit form → `OptimisticPending` → MSW returns 4xx → `OptimisticRolledBack`
-- Storybook interaction test: submit form → `OptimisticPending` → MSW silent failure → `HcmSilentlyWrong`
-- TypeScript clean, no `any`
+- [x] All stories render with MSW-controlled HCM
+- [x] Storybook interaction test: submit form → `OptimisticPending` → MSW returns 4xx → `OptimisticRolledBack`
+- [x] Storybook interaction test: submit form → `OptimisticPending` → MSW silent failure → `HcmSilentlyWrong`
+- [x] TypeScript clean, no `any`
 
 ---
 

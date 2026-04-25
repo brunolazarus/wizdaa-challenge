@@ -1,11 +1,14 @@
 import { http, HttpResponse, delay } from 'msw'
 import type { HcmWriteRequest, HcmAnniversaryBonusRequest } from '@/lib/hcm-types'
-import { getStore } from './store'
+import { getStore, getRequestStore } from './store'
 import {
   parseForceFailure,
   getBalance,
   writeBalance,
   getBalances,
+  getRequests,
+  approveRequest,
+  denyRequest,
   triggerAnniversaryBonus,
 } from './hcm-logic'
 
@@ -66,5 +69,37 @@ export const handlers = [
     const body = (await request.json()) as HcmAnniversaryBonusRequest
     const balances = triggerAnniversaryBonus(getStore(), body.employeeId)
     return HttpResponse.json({ balances })
+  }),
+
+  // Pending requests list — manager view
+  http.get('/api/hcm/requests', () => {
+    return HttpResponse.json({ requests: getRequests(getRequestStore()) })
+  }),
+
+  // Approve a request — applies balance delta, marks request approved
+  http.post('/api/hcm/requests/:id/approve', ({ params }) => {
+    const result = approveRequest(getStore(), getRequestStore(), params.id as string)
+    if (result.type === 'not_found') {
+      return HttpResponse.json({ code: 'NOT_FOUND', message: 'Request not found' }, { status: 404 })
+    }
+    if (result.type === 'already_settled') {
+      return HttpResponse.json({ code: 'CONFLICT', message: `Request already ${result.status}` }, { status: 409 })
+    }
+    if (result.type === 'insufficient_balance') {
+      return HttpResponse.json(result.error, { status: 422 })
+    }
+    return HttpResponse.json(result.response)
+  }),
+
+  // Deny a request — marks denied, no balance change
+  http.post('/api/hcm/requests/:id/deny', ({ params }) => {
+    const result = denyRequest(getRequestStore(), params.id as string)
+    if (result.type === 'not_found') {
+      return HttpResponse.json({ code: 'NOT_FOUND', message: 'Request not found' }, { status: 404 })
+    }
+    if (result.type === 'already_settled') {
+      return HttpResponse.json({ code: 'CONFLICT', message: `Request already ${result.status}` }, { status: 409 })
+    }
+    return HttpResponse.json(result.response)
   }),
 ]
