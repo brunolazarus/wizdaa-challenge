@@ -1,0 +1,106 @@
+
+> examplehr-timeoff@0.1.0 build-storybook
+> storybook build --output-dir=/var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f
+
+
+[90m┌[39m  Building storybook v10.3.5
+[90m│[39m
+[32m◇[39m  Cleaning outputDir:
+[90m│[39m  [36m../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f[39m
+[90m│[39m
+[32m◇[39m  Loading presets
+[90m│[39m
+[32m◇[39m  Building manager..
+[90m│[39m
+[34m●[39m  Building preview..
+[90m│[39m  [43mVite[49m [36mvite v8.0.10 [32mbuilding client environment for production...[36m[39m
+[2Ktransforming...✓ 566 modules transformed.
+rendering chunks...
+computing gzip size...
+[90m│[39m  [43mVite[49m
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/iframe.html
+[90m│[39m  18.56 kB │ gzip:   5.27 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/iframe-BxNRblLx.css
+[90m│[39m  20.53 kB │ gzip:   4.81 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/chunk-CYSK6WYR-Cg_fKp_h.js
+[90m│[39m  0.15 kB │ gzip:   0.13 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/chunk-242VQQM5-C7uawJXQ.js
+[90m│[39m  0.21 kB │ gzip:   0.18 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/formatter-EIJCOSYU-mBJuPlyu.js
+[90m│[39m  0.26 kB │ gzip:   0.21 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/react-BOkfIhVF.js
+[90m│[39m  0.52 kB │ gzip:   0.32 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/BalanceFreshnessIndicator-C0PNprqo.js
+[90m│[39m  0.92 kB │ gzip:   0.49 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/StaleDataWarning-CygGVe-I.js
+[90m│[39m  0.99 kB │ gzip:   0.52 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/StaleDataWarning.stories-DK3GPKfp.js
+[90m│[39m  1.01 kB │ gzip:   0.48 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/chunk-BEldbCjX.js
+[90m│[39m  1.17 kB │ gzip:   0.65 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/preload-helper-BfDd7zNK.js
+[90m│[39m  1.27 kB │ gzip:   0.73 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/BalanceCell-8TUokDen.js
+[90m│[39m  1.34 kB │ gzip:   0.63 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/BalanceFreshnessIndicator.stories-wEJH8oOc.js
+[90m│[39m  1.36 kB │ gzip:   0.57 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/RequestStatusBanner.stories-Dc3MDj5V.js
+[90m│[39m  1.99 kB │ gzip:   0.66 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/RequestStatusBanner-9vXxpNUR.js
+[90m│[39m  2.15 kB │ gzip:   0.99 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/BalanceCell.stories-DPP6JXhb.js
+[90m│[39m  2.26 kB │ gzip:   0.71 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/RequestCard-DcWS9TDq.js
+[90m│[39m  3.47 kB │ gzip:   1.38 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/PendingRequestList.stories-BQOeJzjU.js
+[90m│[39m  3.79 kB │ gzip:   1.41 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/chunk-3LY4VQVK-CTjNoSjH.js
+[90m│[39m  4.02 kB │ gzip:   1.70 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/RequestCard.stories-BmaFWf0V.js
+[90m│[39m  5.31 kB │ gzip:   1.32 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/BalanceTable.stories-D7yrtZIi.js
+[90m│[39m  5.35 kB │ gzip:   1.74 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/RequestForm.stories-aEQ2_O2N.js
+[90m│[39m  10.64 kB │ gzip:   2.78 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/seed-BE-UkbSd.js
+[90m│[39m  10.93 kB │ gzip:   4.63 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/chunk-RD3KTAHR-D2wjbfZA.js
+[90m│[39m  20.66 kB │ gzip:   6.89 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/vite-inject-mocker-entry.js
+[90m│[39m  27.85 kB │ gzip:   9.64 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/matchers-5TDFFDYO-CtfL4KFM.js
+[90m│[39m  28.81 kB │ gzip:   9.67 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/Color-FRDS63T2-jlPgF-Pu.js
+[90m│[39m  30.82 kB │ gzip:  11.56 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/WithTooltip-65CFNBJE--bZwMf1R.js
+[90m│[39m  33.20 kB │ gzip:  11.65 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/theming-DJPjsmOp.js
+[90m│[39m  55.30 kB │ gzip:  21.37 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/syntaxhighlighter-OH4MV7E3-BHgGq3UU.js
+[90m│[39m  76.11 kB │ gzip:  27.37 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/DocsRenderer-LL677BLK-DbZ-6XpU.js
+[90m│[39m  183.13 kB │ gzip:  58.15 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/react-18-aw78Z-WN.js
+[90m│[39m  204.25 kB │ gzip:  64.18 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/components-CYcHYCFc.js
+[90m│[39m  543.75 kB │ gzip: 173.08 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/axe-CDIIHQdO.js
+[90m│[39m  571.03 kB │ gzip: 155.75 kB
+[90m│[39m  ../../../../var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f/assets/iframe-Dxs7_XCp.js
+[90m│[39m  1,549.16 kB │ gzip: 448.41 kB
+
+[90m│[39m
+[33m▲[39m  [43mVite[49m [33m[plugin builtin:vite-reporter]
+[90m│[39m  (!) Some chunks are larger than 500 kB after minification. Consider:
+[90m│[39m  - Using dynamic import() to code-split the application
+[90m│[39m  - Use build.rolldownOptions.output.codeSplitting to improve chunking:
+[90m│[39m  ]8;;https://rolldown.rs/reference/OutputOptions.codeSplittinghttps://rolldown.rs/reference/OutputOptions.codeSplitting]8;;
+[90m│[39m  - Adjust chunk size limit for this warning via
+[90m│[39m  build.chunkSizeWarningLimit.[39m
+[90m│[39m  [43mVite[49m [32m✓ built in 954ms[39m
+[90m│[39m
+[32m◇[39m  Output directory:
+[90m│[39m  /var/folders/j2/1mnlp0jx11903cf_bvww3hgh0000gn/T/chromatic--29924-2ptRy0m3qy4f
+[90m│[39m
+[90m└[39m  Storybook build completed successfully
+

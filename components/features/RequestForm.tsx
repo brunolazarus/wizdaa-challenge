@@ -55,8 +55,9 @@ export function RequestForm({ employeeId }: RequestFormProps) {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-zinc-700 mb-1">Location</label>
+          <label htmlFor="location" className="block text-sm font-medium text-zinc-700 mb-1">Location</label>
           <select
+            id="location"
             value={locationId}
             onChange={(e) => setLocationId(e.target.value)}
             disabled={isPending}
@@ -72,8 +73,9 @@ export function RequestForm({ employeeId }: RequestFormProps) {
 
         <div className="flex gap-3">
           <div className="flex-1">
-            <label className="block text-sm font-medium text-zinc-700 mb-1">Start date</label>
+            <label htmlFor="start-date" className="block text-sm font-medium text-zinc-700 mb-1">Start date</label>
             <input
+              id="start-date"
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
@@ -83,8 +85,9 @@ export function RequestForm({ employeeId }: RequestFormProps) {
             />
           </div>
           <div className="flex-1">
-            <label className="block text-sm font-medium text-zinc-700 mb-1">End date</label>
+            <label htmlFor="end-date" className="block text-sm font-medium text-zinc-700 mb-1">End date</label>
             <input
+              id="end-date"
               type="date"
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
@@ -97,8 +100,9 @@ export function RequestForm({ employeeId }: RequestFormProps) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-zinc-700 mb-1">Reason</label>
+          <label htmlFor="reason" className="block text-sm font-medium text-zinc-700 mb-1">Reason</label>
           <textarea
+            id="reason"
             value={reason}
             onChange={(e) => setReason(e.target.value)}
             disabled={isPending}
